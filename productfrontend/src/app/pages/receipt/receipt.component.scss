@@ -1,0 +1,61 @@
+.receipt-container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.receipt-card {
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.bg-amazon {
+  background-color: #ff9900 !important;
+}
+
+.text-amazon {
+  color: #ff9900;
+}
+
+.btn-amazon {
+  background-color: #ff9900;
+  border-color: #ff9900;
+  color: white;
+}
+
+.btn-amazon:hover {
+  background-color: #e68900;
+  border-color: #e68900;
+  color: white;
+}
+
+.btn-outline-amazon {
+  border-color: #ff9900;
+  color: #ff9900;
+}
+
+.btn-outline-amazon:hover {
+  background-color: #ff9900;
+  border-color: #ff9900;
+  color: white;
+}
+
+@media print {
+  .no-print {
+    display: none !important;
+  }
+  
+  .receipt-card {
+    box-shadow: none;
+    border: 1px solid #ddd;
+  }
+  
+  .container {
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  
+  body {
+    font-size: 12px;
+  }
+}

@@ -1,0 +1,101 @@
+<!-- Stats Cards -->
+<div class="row mb-4">
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card bg-primary text-white">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>{{stats.totalProducts}}</h4>
+            <p class="mb-0">Total Products</p>
+          </div>
+          <i class="fas fa-box fa-2x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card bg-success text-white">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>{{stats.totalOrders}}</h4>
+            <p class="mb-0">Total Orders</p>
+          </div>
+          <i class="fas fa-shopping-cart fa-2x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card bg-info text-white">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>{{stats.totalUsers}}</h4>
+            <p class="mb-0">Total Users</p>
+          </div>
+          <i class="fas fa-users fa-2x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3 col-sm-6 mb-3">
+    <div class="card bg-warning text-white">
+      <div class="card-body">
+        <div class="d-flex justify-content-between">
+          <div>
+            <h4>${{stats.totalRevenue}}</h4>
+            <p class="mb-0">Total Revenue</p>
+          </div>
+          <i class="fas fa-dollar-sign fa-2x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Recent Activity -->
+<div class="row">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Recent Orders</h5>
+      </div>
+      <div class="card-body">
+        <div class="order-item d-flex justify-content-between align-items-center py-2" *ngFor="let order of recentOrders">
+          <div>
+            <strong>Order #{{order.id}}</strong>
+            <br>
+            <small class="text-muted">{{order.user.username}}</small>
+          </div>
+          <div class="text-end">
+            <div class="price-text">${{order.totalAmount}}</div>
+            <span class="badge" [class]="getStatusBadgeClass(order.status)">{{order.status}}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Low Stock Products</h5>
+      </div>
+      <div class="card-body">
+        <div class="product-item d-flex justify-content-between align-items-center py-2" *ngFor="let product of lowStockProducts">
+          <div class="d-flex align-items-center">
+            <img [src]="getProductImage(product)" [alt]="product.name" 
+                 class="me-3 rounded" style="width: 40px; height: 40px; object-fit: cover;">
+            <div>
+              <strong>{{product.name}}</strong>
+              <br>
+              <small class="text-muted">Stock: {{product.quantity}}</small>
+            </div>
+          </div>
+          <span class="badge bg-warning">Low Stock</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

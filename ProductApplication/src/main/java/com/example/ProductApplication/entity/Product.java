@@ -10,6 +10,8 @@ public class Product {
     private String name;
     private String description;
     private Double price;
+    private Long quantity;
+    private String imagePath;
 
     // Getters and setters
     public Long getId() { return id; }
@@ -20,4 +22,8 @@ public class Product {
     public void setDescription(String description) { this.description = description; }
     public Double getPrice() { return price; }
     public void setPrice(Double price) { this.price = price; }
+    public Long getQuantity() { return quantity; }
+    public void setQuantity(Long quantity) { this.quantity = quantity; }
+    public String getImagePath() { return imagePath; }
+    public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 }

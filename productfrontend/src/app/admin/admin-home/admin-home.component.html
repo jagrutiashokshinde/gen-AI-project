@@ -1,0 +1,93 @@
+<!-- Welcome Section -->
+<div class="welcome-section bg-primary text-white py-5">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-8">
+        <h1 class="display-4 fw-bold">Welcome to Admin Panel</h1>
+        <p class="lead">Manage your e-commerce platform efficiently with powerful admin tools.</p>
+      </div>
+      <div class="col-md-4 text-end">
+        <i class="fas fa-cogs fa-5x opacity-50"></i>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Stats -->
+<div class="container my-5">
+  <div class="row">
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card bg-success text-white h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-box fa-3x mb-3"></i>
+          <h3>{{stats.totalProducts}}</h3>
+          <p class="mb-0">Total Products</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card bg-info text-white h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-shopping-cart fa-3x mb-3"></i>
+          <h3>{{stats.totalOrders}}</h3>
+          <p class="mb-0">Total Orders</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card bg-warning text-white h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-users fa-3x mb-3"></i>
+          <h3>{{stats.totalUsers}}</h3>
+          <p class="mb-0">Total Users</p>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-4">
+      <div class="card bg-danger text-white h-100">
+        <div class="card-body text-center">
+          <i class="fas fa-dollar-sign fa-3x mb-3"></i>
+          <h3>${{stats.totalRevenue}}</h3>
+          <p class="mb-0">Total Revenue</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Quick Actions -->
+<div class="container mb-5">
+  <h2 class="text-center mb-4">Quick Actions</h2>
+  <div class="row">
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card h-100 text-center card-hover">
+        <div class="card-body">
+          <i class="fas fa-plus-circle fa-4x text-success mb-3"></i>
+          <h5 class="card-title">Add Product</h5>
+          <p class="card-text">Add new products to your inventory</p>
+          <button class="btn btn-success" (click)="navigateTo('products')">Add Product</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card h-100 text-center card-hover">
+        <div class="card-body">
+          <i class="fas fa-clipboard-list fa-4x text-info mb-3"></i>
+          <h5 class="card-title">Manage Orders</h5>
+          <p class="card-text">View and update order status</p>
+          <button class="btn btn-info" (click)="navigateTo('orders')">View Orders</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-4 col-sm-6 mb-4">
+      <div class="card h-100 text-center card-hover">
+        <div class="card-body">
+          <i class="fas fa-users fa-4x text-warning mb-3"></i>
+          <h5 class="card-title">User Management</h5>
+          <p class="card-text">View and manage user accounts</p>
+          <button class="btn btn-warning" (click)="navigateTo('users')">View Users</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

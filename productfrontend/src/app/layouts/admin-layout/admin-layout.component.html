@@ -1,0 +1,77 @@
+<!-- Admin Header -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">
+      <i class="fas fa-cog me-2"></i>
+      Admin Panel
+    </a>
+    
+    <div class="navbar-nav ms-auto">
+      <div class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle text-white" href="#" role="button" data-bs-toggle="dropdown">
+          <i class="fas fa-user me-1"></i>
+          {{(currentUser$ | async)?.username}}
+        </a>
+        <ul class="dropdown-menu">
+          <li><a class="dropdown-item" (click)="switchToCustomer()">Switch to Customer View</a></li>
+          <li><hr class="dropdown-divider"></li>
+          <li><a class="dropdown-item" (click)="logout()">Sign Out</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- Admin Sidebar -->
+<div class="admin-container">
+  <div class="sidebar bg-light">
+    <div class="sidebar-header p-3">
+      <h5>Admin Menu</h5>
+    </div>
+    <ul class="nav flex-column">
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'home'" (click)="setActiveTab('')">
+          <i class="fas fa-home me-2"></i>
+          Home
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'dashboard'" (click)="setActiveTab('dashboard')">
+          <i class="fas fa-tachometer-alt me-2"></i>
+          Dashboard
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'products'" (click)="setActiveTab('products')">
+          <i class="fas fa-box me-2"></i>
+          Products
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'orders'" (click)="setActiveTab('orders')">
+          <i class="fas fa-shopping-cart me-2"></i>
+          Orders
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'users'" (click)="setActiveTab('users')">
+          <i class="fas fa-users me-2"></i>
+          Users
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" [class.active]="activeTab === 'payments'" (click)="setActiveTab('payments')">
+          <i class="fas fa-credit-card me-2"></i>
+          Payments
+        </a>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Main Content -->
+  <div class="main-content">
+    <div class="container-fluid p-4">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>

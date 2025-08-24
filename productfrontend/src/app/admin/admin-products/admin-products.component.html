@@ -1,0 +1,149 @@
+<!-- Add Product Button -->
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3>Product Management</h3>
+  <button class="btn btn-amazon" (click)="toggleAddForm()">
+    <i class="fas fa-plus me-2"></i>
+    Add New Product
+  </button>
+</div>
+
+<!-- Add Product Form -->
+<div class="card mb-4" *ngIf="showAddForm">
+  <div class="card-header">
+    <h5 class="mb-0">Add New Product</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control" formControlName="price" step="0.01">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input type="number" class="form-control" formControlName="quantity">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" rows="3" formControlName="description"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Product Image</label>
+            <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+            <div class="mt-2" *ngIf="imagePreview">
+              <img [src]="imagePreview" alt="Preview" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-amazon" [disabled]="productForm.invalid || isSubmitting">
+          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+          Add Product
+        </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelAddProduct()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Edit Product Form -->
+<div class="card mb-4" *ngIf="showEditForm">
+  <div class="card-header">
+    <h5 class="mb-0">Edit Product: {{editingProduct?.name}}</h5>
+  </div>
+  <div class="card-body">
+    <form [formGroup]="productForm" (ngSubmit)="updateProduct()">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Product Name</label>
+            <input type="text" class="form-control" formControlName="name">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Price</label>
+            <input type="number" class="form-control" formControlName="price" step="0.01">
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Quantity</label>
+            <input type="number" class="form-control" formControlName="quantity">
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea class="form-control" rows="3" formControlName="description"></textarea>
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Product Image</label>
+            <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+            <small class="form-text text-muted">Leave empty to keep current image</small>
+            <div class="mt-2" *ngIf="imagePreview">
+              <img [src]="imagePreview" alt="Preview" class="img-thumbnail" style="max-width: 150px; max-height: 150px;">
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="d-flex gap-2">
+        <button type="submit" class="btn btn-success" [disabled]="productForm.invalid || isSubmitting">
+          <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+          Update Product
+        </button>
+        <button type="button" class="btn btn-outline-secondary" (click)="cancelEdit()">Cancel</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Products Table -->
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">All Products</h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let product of products">
+            <td>
+              <img [src]="getProductImage(product)" [alt]="product.name" 
+                   style="width: 60px; height: 60px; object-fit: cover;" class="rounded"
+                   (error)="onImageError($event)">
+            </td>
+            <td>{{product.name}}</td>
+            <td>{{product.description | slice:0:50}}...</td>
+            <td>${{product.price}}</td>
+            <td>
+              <span class="badge" [class]="getStockBadgeClass(product)">{{product.quantity}}</span>
+            </td>
+            <td>
+              <button class="btn btn-sm btn-outline-primary me-2" (click)="editProduct(product)">
+                <i class="fas fa-edit"></i>
+              </button>
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(product)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

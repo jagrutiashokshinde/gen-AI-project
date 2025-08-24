@@ -10,15 +10,16 @@ public class CorsConfig {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
-        return new WebMvcConfigurer() {
-
+         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins("http://localhost:4200") // ✅ Replace * with actual frontend origin
-                        .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*")
-                        .allowCredentials(true);
+                    .allowedOrigins("http://localhost:4200", "http://localhost:3000")
+                    .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "HEAD")
+                    .allowedHeaders("*")
+                    .exposedHeaders("Authorization")
+                    .allowCredentials(true)
+                    .maxAge(3600);
             }
         };
     }

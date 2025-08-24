@@ -1,0 +1,91 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="mb-4">
+        <i class="fas fa-box me-2"></i>
+        Your Orders
+      </h2>
+    </div>
+  </div>
+
+  <!-- Orders List -->
+  <div class="row" *ngIf="orders.length > 0">
+    <div class="col-12">
+      <div class="order-card card mb-4" *ngFor="let order of orders">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <div>
+            <h6 class="mb-0">Order #{{order.id}}</h6>
+            <small class="text-muted">Placed on {{order.createdAt | date:'medium'}}</small>
+          </div>
+          <div>
+            <span class="badge" [class]="getStatusBadgeClass(order.status)">{{order.status}}</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-8">
+              <div class="order-items">
+                <div class="order-item d-flex align-items-center mb-3" *ngFor="let item of order.orderItems">
+                  <img [src]="getProductImage(item.product)" [alt]="item.product.name" 
+                       class="me-3 rounded" style="width: 60px; height: 60px; object-fit: cover;">
+                  <div class="flex-grow-1">
+                    <h6 class="mb-1">{{item.product.name}}</h6>
+                    <p class="text-muted small mb-1">Quantity: {{item.quantity}}</p>
+                    <p class="mb-0 fw-bold">${{item.price * item.quantity}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="order-summary">
+                <div class="d-flex justify-content-between mb-2">
+                  <span>Total Amount:</span>
+                  <span class="price-text fw-bold">${{order.totalAmount}}</span>
+                </div>
+                <div class="d-grid gap-2">
+                  <button class="btn btn-outline-amazon btn-sm" (click)="viewOrderDetails(order)">
+                    <i class="fas fa-eye me-1"></i>
+                    View Details
+                  </button>
+                  <button class="btn btn-outline-secondary btn-sm" 
+                          *ngIf="order.status === 'PENDING'" 
+                          (click)="cancelOrder(order)">
+                    <i class="fas fa-times me-1"></i>
+                    Cancel Order
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- No Orders -->
+  <div class="row" *ngIf="orders.length === 0 && !loading">
+    <div class="col-12">
+      <div class="text-center py-5">
+        <i class="fas fa-box-open fa-4x text-muted mb-4"></i>
+        <h3>No orders yet</h3>
+        <p class="text-muted mb-4">You haven't placed any orders yet. Start shopping to see your orders here.</p>
+        <button class="btn btn-amazon btn-lg" routerLink="/products">
+          <i class="fas fa-shopping-bag me-2"></i>
+          Start Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Loading State -->
+  <div class="row" *ngIf="loading">
+    <div class="col-12">
+      <div class="text-center py-5">
+        <div class="spinner-border text-amazon" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+        <p class="mt-3">Loading your orders...</p>
+      </div>
+    </div>
+  </div>
+</div>

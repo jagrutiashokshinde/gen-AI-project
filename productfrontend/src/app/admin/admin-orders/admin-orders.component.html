@@ -1,0 +1,65 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3>Order Management</h3>
+  <div class="d-flex gap-2">
+    <select class="form-select" [(ngModel)]="statusFilter" (change)="filterOrders()">
+      <option value="">All Orders</option>
+      <option value="PENDING">Pending</option>
+      <option value="CONFIRMED">Confirmed</option>
+      <option value="SHIPPED">Shipped</option>
+      <option value="DELIVERED">Delivered</option>
+      <option value="CANCELLED">Cancelled</option>
+    </select>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">All Orders ({{filteredOrders.length}})</h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Customer</th>
+            <th>Items</th>
+            <th>Total Amount</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of filteredOrders">
+            <td><strong>#{{order.id}}</strong></td>
+            <td>{{order.user.username}}</td>
+            <td>
+              <div class="order-items">
+                <div *ngFor="let item of order.orderItems" class="small">
+                  {{item.product.name}} x {{item.quantity}}
+                </div>
+              </div>
+            </td>
+            <td class="price-text">${{order.totalAmount}}</td>
+            <td>
+              <span class="badge" [class]="getStatusBadgeClass(order.status)">{{order.status}}</span>
+            </td>
+            <td>{{order.createdAt | date:'short'}}</td>
+            <td>
+              <select class="form-select form-select-sm" 
+                      [value]="order.status" 
+                      (change)="updateOrderStatus(order, $event)">
+                <option value="PENDING">Pending</option>
+                <option value="CONFIRMED">Confirmed</option>
+                <option value="SHIPPED">Shipped</option>
+                <option value="DELIVERED">Delivered</option>
+                <option value="CANCELLED">Cancelled</option>
+              </select>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,267 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-12">
+      <h2 class="mb-4">
+        <i class="fas fa-tachometer-alt me-2"></i>
+        Admin Dashboard
+      </h2>
+    </div>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="row mb-4">
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="card bg-primary text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h4>{{stats.totalProducts}}</h4>
+              <p class="mb-0">Total Products</p>
+            </div>
+            <i class="fas fa-box fa-2x"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="card bg-success text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h4>{{stats.totalOrders}}</h4>
+              <p class="mb-0">Total Orders</p>
+            </div>
+            <i class="fas fa-shopping-cart fa-2x"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="card bg-info text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h4>{{stats.totalUsers}}</h4>
+              <p class="mb-0">Total Users</p>
+            </div>
+            <i class="fas fa-users fa-2x"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-3 col-sm-6 mb-3">
+      <div class="card bg-warning text-white">
+        <div class="card-body">
+          <div class="d-flex justify-content-between">
+            <div>
+              <h4>${{stats.totalRevenue}}</h4>
+              <p class="mb-0">Total Revenue</p>
+            </div>
+            <i class="fas fa-dollar-sign fa-2x"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Action Buttons -->
+  <div class="row mb-4">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="mb-0">Quick Actions</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-3 col-sm-6 mb-3">
+              <button class="btn btn-amazon w-100" (click)="showAddProductModal()">
+                <i class="fas fa-plus me-2"></i>
+                Add Product
+              </button>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-3">
+              <button class="btn btn-outline-primary w-100" (click)="loadProducts()">
+                <i class="fas fa-list me-2"></i>
+                Manage Products
+              </button>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-3">
+              <button class="btn btn-outline-success w-100" (click)="loadOrders()">
+                <i class="fas fa-clipboard-list me-2"></i>
+                View Orders
+              </button>
+            </div>
+            <div class="col-md-3 col-sm-6 mb-3">
+              <button class="btn btn-outline-info w-100" (click)="loadUsers()">
+                <i class="fas fa-user-friends me-2"></i>
+                View Users
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Product Form -->
+  <div class="row mb-4" *ngIf="showProductForm">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">Add New Product</h5>
+          <button class="btn btn-sm btn-outline-secondary" (click)="hideProductForm()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+        <div class="card-body">
+          <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Product Name</label>
+                  <input type="text" class="form-control" formControlName="name">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Price</label>
+                  <input type="number" class="form-control" formControlName="price" step="0.01">
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Quantity</label>
+                  <input type="number" class="form-control" formControlName="quantity">
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="mb-3">
+                  <label class="form-label">Description</label>
+                  <textarea class="form-control" rows="3" formControlName="description"></textarea>
+                </div>
+                <div class="mb-3">
+                  <label class="form-label">Product Image</label>
+                  <input type="file" class="form-control" (change)="onFileSelected($event)" accept="image/*">
+                </div>
+              </div>
+            </div>
+            <div class="d-flex gap-2">
+              <button type="submit" class="btn btn-amazon" [disabled]="productForm.invalid || isSubmitting">
+                <span *ngIf="isSubmitting" class="spinner-border spinner-border-sm me-2"></span>
+                Add Product
+              </button>
+              <button type="button" class="btn btn-outline-secondary" (click)="hideProductForm()">Cancel</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Data Table -->
+  <div class="row" *ngIf="currentView !== 'dashboard'">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-header d-flex justify-content-between align-items-center">
+          <h5 class="mb-0">{{getTableTitle()}}</h5>
+          <button class="btn btn-sm btn-outline-secondary" (click)="backToDashboard()">
+            <i class="fas fa-arrow-left me-1"></i>
+            Back to Dashboard
+          </button>
+        </div>
+        <div class="card-body">
+          <!-- Products Table -->
+          <div *ngIf="currentView === 'products'">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Image</th>
+                    <th>Name</th>
+                    <th>Price</th>
+                    <th>Quantity</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let product of products">
+                    <td>
+                      <img [src]="getProductImage(product)" [alt]="product.name" 
+                           style="width: 50px; height: 50px; object-fit: cover;" class="rounded">
+                    </td>
+                    <td>{{product.name}}</td>
+                    <td>${{product.price}}</td>
+                    <td>{{product.quantity}}</td>
+                    <td>
+                      <button class="btn btn-sm btn-outline-danger" (click)="deleteProduct(product)">
+                        <i class="fas fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Orders Table -->
+          <div *ngIf="currentView === 'orders'">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Order ID</th>
+                    <th>User</th>
+                    <th>Total Amount</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let order of orders">
+                    <td>#{{order.id}}</td>
+                    <td>{{order.user.username}}</td>
+                    <td>${{order.totalAmount}}</td>
+                    <td>
+                      <span class="badge" [class]="getStatusBadgeClass(order.status)">{{order.status}}</span>
+                    </td>
+                    <td>
+                      <select class="form-select form-select-sm" 
+                              [value]="order.status" 
+                              (change)="updateOrderStatus(order, $event)">
+                        <option value="PENDING">Pending</option>
+                        <option value="CONFIRMED">Confirmed</option>
+                        <option value="SHIPPED">Shipped</option>
+                        <option value="DELIVERED">Delivered</option>
+                        <option value="CANCELLED">Cancelled</option>
+                      </select>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Users Table -->
+          <div *ngIf="currentView === 'users'">
+            <div class="table-responsive">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Roles</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of users">
+                    <td>{{user.id}}</td>
+                    <td>{{user.username}}</td>
+                    <td>
+                      <span class="badge bg-primary me-1" *ngFor="let role of user.roles">{{role.name}}</span>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

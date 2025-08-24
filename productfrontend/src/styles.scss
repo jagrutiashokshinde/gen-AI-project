@@ -1,0 +1,65 @@
+@import 'bootstrap/dist/css/bootstrap.min.css';
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+@import '@fortawesome/fontawesome-free/css/all.min.css';
+
+/* Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f8f9fa;
+}
+
+.btn-amazon {
+  background-color: #ff9900;
+  border-color: #ff9900;
+  color: white;
+}
+
+.btn-amazon:hover {
+  background-color: #e68900;
+  border-color: #e68900;
+  color: white;
+}
+
+.text-amazon {
+  color: #ff9900;
+}
+
+.bg-amazon {
+  background-color: #232f3e;
+}
+
+.card-hover:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+  transition: all 0.3s ease;
+}
+
+.price-text {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #B12704;
+}
+
+.original-price {
+  text-decoration: line-through;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.btn-outline-amazon {
+  border: 2px solid #ff9900;
+  color: #ff9900;
+  background: transparent;
+}
+
+.btn-outline-amazon:hover {
+  background: #ff9900;
+  border-color: #ff9900;
+  color: white;
+}

@@ -1,0 +1,87 @@
+<div class="d-flex justify-content-between align-items-center mb-4">
+  <h3>Payment Management</h3>
+  <div class="d-flex gap-2">
+    <select class="form-select" [(ngModel)]="statusFilter" (change)="filterPayments()">
+      <option value="">All Payments</option>
+      <option value="SUCCESS">Success</option>
+      <option value="FAILED">Failed</option>
+      <option value="PENDING">Pending</option>
+    </select>
+  </div>
+</div>
+
+<div class="card">
+  <div class="card-header">
+    <h5 class="mb-0">All Payments ({{filteredPayments.length}})</h5>
+  </div>
+  <div class="card-body">
+    <div class="table-responsive">
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th>Payment ID</th>
+            <th>User ID</th>
+            <th>Amount</th>
+            <th>Status</th>
+            <th>Razorpay Order ID</th>
+            <th>Razorpay Payment ID</th>
+            <th>Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let payment of filteredPayments">
+            <td><strong>#{{payment.id}}</strong></td>
+            <td>{{payment.userId}}</td>
+            <td class="price-text">${{payment.amount}}</td>
+            <td>
+              <span class="badge" [class]="getStatusBadgeClass(payment.status)">{{payment.status}}</span>
+            </td>
+            <td>
+              <small class="text-muted">{{payment.razorpayOrderId || 'N/A'}}</small>
+            </td>
+            <td>
+              <small class="text-muted">{{payment.razorpayPaymentId || 'N/A'}}</small>
+            </td>
+            <td>{{getFormattedDate()}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Summary -->
+<div class="row mt-4">
+  <div class="col-md-3">
+    <div class="card bg-success text-white">
+      <div class="card-body text-center">
+        <h4>${{getTotalSuccessfulPayments()}}</h4>
+        <p class="mb-0">Successful Payments</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-danger text-white">
+      <div class="card-body text-center">
+        <h4>${{getTotalFailedPayments()}}</h4>
+        <p class="mb-0">Failed Payments</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-warning text-white">
+      <div class="card-body text-center">
+        <h4>{{getSuccessfulPaymentCount()}}</h4>
+        <p class="mb-0">Success Count</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card bg-info text-white">
+      <div class="card-body text-center">
+        <h4>{{getFailedPaymentCount()}}</h4>
+        <p class="mb-0">Failed Count</p>
+      </div>
+    </div>
+  </div>
+</div>
